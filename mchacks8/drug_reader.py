@@ -5,11 +5,11 @@ from google.cloud.vision_v1 import types
 import json
 import re
 
-
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="C:/Users/tarik/mchacks2020-4e33795287ad.json"
 
 client = vision.ImageAnnotatorClient()
 
+# Replace with path to your picture
 FILE_NAME = 'sample2.jpg'
 FOLDER_PATH = 'C:\\Users\\tarik\\git_projects\\mchacks8'
 
@@ -24,6 +24,7 @@ texts = response.text_annotations
 with open("drug_dictionary.json") as drug_dict_file:
     drug_dict = json.load(drug_dict_file)
 
+# patient_master.json can be replaced with patient.json to save medications
 with open("patient_master.json") as patient_file:
     patient = json.load(patient_file)
 
@@ -64,7 +65,7 @@ new_drug = \
         "Quantity": 10,
         "Start date": date,
         "ReferenceNumber" : 9213929,
-        "Notes" : "TAKE 1 TABLET BY MOUTH ONCE DAILY",
+        "Notes" : "TAKE 1 TABLET UP BUM ONCE EVERY TWO DAYS",
         "FullText" : ' '.join(full_text)
     }
 
