@@ -10,8 +10,8 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"]="C:/Users/tarik/mchacks2020-4e33795
 
 client = vision.ImageAnnotatorClient()
 
-FILE_NAME = 'doxy2.jpg'
-FOLDER_PATH = 'C:\\Users\\tarik\\Pictures'
+FILE_NAME = 'sample2.jpg'
+FOLDER_PATH = 'C:\\Users\\tarik\\git_projects\\mchacks8'
 
 with io.open(os.path.join(FOLDER_PATH, FILE_NAME), 'rb') as image_file:
     content = image_file.read()
@@ -24,7 +24,7 @@ texts = response.text_annotations
 with open("drug_dictionary.json") as drug_dict_file:
     drug_dict = json.load(drug_dict_file)
 
-with open("patient.json") as patient_file:
+with open("patient_master.json") as patient_file:
     patient = json.load(patient_file)
 
 # Parse the data
@@ -69,3 +69,6 @@ new_drug = \
     }
 
 patient['Medications'].append(new_drug)
+
+with open('patient.json', 'w') as dest:
+    json.dump(patient, dest, indent=4, sort_keys=True)

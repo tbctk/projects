@@ -1,0 +1,18 @@
+{
+  "Name" : "Tarik Bouchoutrouch-Ku",
+  "Age" : 20,
+  "Sex" : "Male",
+  "Medications" : [
+     {
+       "Name" : "Doxycycline",
+       "Dosage" : 100,
+       "Administration" : "Oral",
+       "Frequency" : 1,
+       "Quantity" : 30,
+       "Start date" : "11 Jan 2021",
+       "ReferenceNumber" : 9213927,
+       "Notes" : "TAKE 1 TABLET BY MOUTH ONCE DAILY",
+       "FullText" : ""
+    }
+  ]
+}
