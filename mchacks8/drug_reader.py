@@ -29,37 +29,42 @@ with open("patient_master.json") as patient_file:
     patient = json.load(patient_file)
 
 # Parse the data
-drug_name = None
 full_text = []
-name_match = None
 for text in texts:
     full_text += re.split('\s', text.description)
-    if not name_match:
+
+
+
+# Get info
+drug_name = None
+months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+date = "No date found"
+dosage = "No dosage found"
+for i in range(len(full_text)):
+    # Search for drug name and dosage
+    if not drug_name:
         for d in drug_dict["Drugs"]:
-            name_match = re.search(d, text.description, flags=re.IGNORECASE)
-            if name_match:
+            if re.search(d, full_text[i], flags=re.IGNORECASE):
                 drug_name = d
+                dosage = full_text[i+1]
+
+    # Search for date
+    if date == "":
+        for month in months:
+            if re.search(month, full_text[i], flags=re.IGNORECASE) and re.search('[1-3]?[0-9]',full_text[i-1]) and re.search('20[0-2][0-9]',full_text[i+1]):
+                date = full_text[i-1] + " " + full_text[i] + " " + full_text[i+1]
+            if re.search('[0-1][0-9]/[0-3][0-9]/20[0-2][0-9]', full_text[i]) or re.search('20[0-2][0-9]/[0-1][0-9]/[0-3][0-9]', full_text[i]):
+                date = full_text[i]
+
 
 if not drug_name:
     print("No medication name found. Please take another picture.")
     exit(2)
 
-# Get the date
-months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
-date = ""
-for i in range(len(full_text)):
-    for month in months:
-        if re.search(month, full_text[i], flags=re.IGNORECASE) and re.search('[1-3]?[0-9]',full_text[i-1]) and re.search('20[0-2][0-9]',full_text[i+1]):
-            date = full_text[i-1] + " " + full_text[i] + " " + full_text[i+1]
-            break
-        if re.search('[0-1][0-9]/[0-3][0-9]/20[0-2][0-9]', full_text[i]) or re.search('20[0-2][0-9]/[0-1][0-9]/[0-3][0-9]', full_text[i]):
-            date = full_text[i]
-            break
-
-new_drug = \
+patient['Medications'].append(
     {
         "Name" : drug_name,
-        "Dosage" : 200,
+        "Dosage" : dosage,
         "Administration" : "Bum",
         "Frequency" : 0.5,
         "Quantity": 10,
@@ -68,8 +73,7 @@ new_drug = \
         "Notes" : "TAKE 1 TABLET UP BUM ONCE EVERY TWO DAYS",
         "FullText" : ' '.join(full_text)
     }
-
-patient['Medications'].append(new_drug)
+)
 
 with open('patient.json', 'w') as dest:
-    json.dump(patient, dest, indent=4, sort_keys=True)
+    json.dump(patient, dest, indent=4)

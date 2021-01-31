@@ -4,8 +4,8 @@
   "Sex" : "Male",
   "Medications" : [
      {
-       "Name" : "Doxycycline",
-       "Dosage" : 100,
+       "Name" : "Acetaminophen",
+       "Dosage" : "50MG",
        "Administration" : "Oral",
        "Frequency" : 1,
        "Quantity" : 30,
